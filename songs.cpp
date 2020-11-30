@@ -25,6 +25,9 @@ song** songsFromYear(song **songs, int size, int year, int* resultSize) {
 }
 
 string songToString(song *s) {
+  if (s == NULL) {
+    return "Song is deleted.";
+  }
   stringstream ss;
   ss << s->artist << " - " << s->title << " (" << s->year << ")";
   return ss.str();
@@ -70,7 +73,16 @@ int main() {
   cout << "Printing filtered songs from year " << YEAR << "..." << endl;
   for (int i = 0; i < resultSize; i++) {
     cout << songToString(filteredSongs[i]) << endl;
-    delete songArray[i];
+    delete filteredSongs[i];
+    filteredSongs[i] = NULL;
+  }
+  delete [] filteredSongs;
+  filteredSongs = NULL;
+
+  for (int j = 0; j < ARRAY_SIZE; j++) {
+    delete songArray[j];
+    songArray[j] = NULL;
   }
   delete [] songArray;
+  songArray = NULL;
 }
